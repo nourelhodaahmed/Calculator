@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Button">
+        <item name="android:layout_width">79dp</item>
+        <item name="android:layout_height">79dp</item>
+    </style>
+
+    <style name="Button.NumberButton">
+        <item name="android:background">@drawable/number_buttons</item>
+    </style>
+
+    <style name="Button.FunctionButton">
+        <item name="android:background">@drawable/functions_buttons</item>
+    </style>
+
+    <style name="ButtonText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/doppio_one_regular</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/Brown</item>
+    </style>
+
+    <style name="ButtonText.NumberButtonText">
+        <item name="android:textColor">@color/Brown</item>
+    </style>
+
+    <style name="ButtonText.FunctionButtonText">
+        <item name="android:textColor">@color/OffWhite</item>
+    </style>
+</resources>
