@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="4"
-        android:padding="16dp"
+        android:padding="8dp"
         android:background="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -275,7 +275,8 @@
             style="@style/Button.NumberButton"
             app:layout_constraintTop_toBottomOf="@id/num1_btn"
             app:layout_constraintStart_toStartOf="@id/num1_btn"
-            app:layout_constraintEnd_toEndOf="@id/num1_btn">
+            app:layout_constraintEnd_toEndOf="@id/num1_btn"
+            app:layout_constraintBottom_toBottomOf="p">
             <ImageView
                 android:layout_width="12dp"
                 android:layout_height="28dp"

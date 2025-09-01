@@ -3,6 +3,7 @@
     <style name="Button">
         <item name="android:layout_width">79dp</item>
         <item name="android:layout_height">79dp</item>
+        <item name="android:layout_marginTop">8dp</item>
     </style>
 
     <style name="Button.NumberButton">
