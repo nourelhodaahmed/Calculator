@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="Brown">#FF554238</color>
+    <color name="Brown40pre">#66554238</color>
     <color name="Orange">#FFF89864</color>
     <color name="OrangePressed">#CE7D4C</color>
     <color name="OffWhite">#FFF8F8F8</color>
