@@ -2,7 +2,6 @@ package com.android.calculator
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -31,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             viewModel.state.collect { state ->
                 binding.lastEquation.text = state.lastOperation
-                binding.currentEquation.text = state.currentEquation + state.currentNumber
+                binding.currentEquation.text = state.currentEquation + " " + state.currentNumber
             }
         }
     }
