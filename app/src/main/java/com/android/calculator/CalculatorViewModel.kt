@@ -1,6 +1,5 @@
 package com.android.calculator
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -36,33 +35,37 @@ class CalculatorViewModel() : ViewModel() {
     }
 
     fun onOperatorClicked(operator: Operator) {
+        if (_state.value.currentNumber == "0") return
         if (
             _state.value.operators.isNotEmpty() &&
             _state.value.operators.last() != Operator.MOD &&
             _state.value.operators.size == _state.value.numbers.size + 1
         ) {
-            return
+            _state.update {
+                it.copy(
+                    currentEquation = _state.value.currentNumber
+                        .split(" ")
+                        .dropLast(1)
+                        .joinToString(" ") + operator.toEquation(),
+                    operators = _state.value.operators.dropLast(1) + operator
+                )
+            }
         }
-        _state.update {
-            it.copy(
-                currentEquation = buildString {
-                    append(_state.value.currentEquation)
-                    append(" ")
-                    append(_state.value.currentNumber)
-                    append(" ")
-                    append(operator.toEquation())
-                },
-                numbers =
-//                    if (
-//                    _state.value.operators.isNotEmpty() &&
-//                    _state.value.operators.last() != Operator.MOD
-//                    )
-//                    _state.value.numbers + _state.value.currentNumber
-//                else
-                    _state.value.numbers,
-                currentNumber = if (operator == Operator.MOD) "" else "0",
-                operators = _state.value.operators + operator
-            )
+        else{
+            _state.update {
+                it.copy(
+                    currentEquation = buildString {
+                        append(_state.value.currentEquation)
+                        append(" ")
+                        append(_state.value.currentNumber)
+                        append(" ")
+                        append(operator.toEquation())
+                    },
+                    numbers = _state.value.numbers + _state.value.currentNumber,
+                    currentNumber = if (operator == Operator.MOD) "" else "0",
+                    operators = _state.value.operators + operator
+                )
+            }
         }
     }
 
@@ -81,7 +84,7 @@ class CalculatorViewModel() : ViewModel() {
     fun deleteLast() {
         if (_state.value.currentNumber == "0" && _state.value.operators.isEmpty()) return
         else if (
-            (_state.value.currentNumber == "0" || _state.value.currentNumber == "")&&
+            (_state.value.currentNumber == "0" || _state.value.currentNumber == "") &&
             _state.value.operators.isNotEmpty())
         {
             val lastNumber = _state.value.currentEquation
@@ -108,27 +111,19 @@ class CalculatorViewModel() : ViewModel() {
 
     fun onEqualButtonClicked() {
         if (_state.value.currentNumber == UNDEFINED) return
-        val operatorsSize =
-            if (_state.value.operators.contains(Operator.MOD))
-                _state.value.operators.size - 1
-            else
-                _state.value.operators.size
-
-        Log.d("operatorsSize", operatorsSize.toString())
-        Log.d("_state.value.numbers.size", _state.value.numbers.size.toString())
-        if (operatorsSize == _state.value.numbers.size) {
+        if (_state.value.currentNumber != "")
             _state.update { it.copy(numbers = _state.value.numbers + _state.value.currentNumber) }
-            val res = calculateResult()
 
-            _state.update {
-                it.copy(
-                    lastOperation = _state.value.currentEquation + " " + _state.value.currentNumber,
-                    currentEquation = "",
-                    currentNumber = res,
-                    numbers = listOf(),
-                    operators = listOf()
-                )
-            }
+        val res = calculateResult()
+
+        _state.update {
+            it.copy(
+                lastOperation = _state.value.currentEquation + " " + _state.value.currentNumber,
+                currentEquation = "",
+                currentNumber = res,
+                numbers = listOf(),
+                operators = listOf()
+            )
         }
     }
 
