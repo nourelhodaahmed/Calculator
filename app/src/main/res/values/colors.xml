@@ -13,4 +13,5 @@
     <color name="OrangePressed">#CE7D4C</color>
     <color name="OffWhite">#FFF8F8F8</color>
     <color name="OffWhitePressed">#FFE2DFDF</color>
+    <color name="OffWhiteDark">#FFDFDDDC</color>
 </resources>

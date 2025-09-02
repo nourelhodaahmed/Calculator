@@ -15,7 +15,7 @@
         android:layout_weight="0.5"
         android:background="@drawable/result_view"
         android:paddingHorizontal="24dp"
-        android:paddingVertical="32dp">
+        android:paddingTop="32dp">
 
         <TextView
             android:id="@+id/last_equation"
@@ -37,8 +37,18 @@
             android:text="0"
             android:textColor="@color/Brown"
             android:textSize="36dp"
+            android:layout_marginBottom="32dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <View
+            android:layout_width="32dp"
+            android:layout_height="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/calculator_indicator"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
