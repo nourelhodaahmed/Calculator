@@ -50,8 +50,7 @@ class CalculatorViewModel() : ViewModel() {
                     operators = _state.value.operators.dropLast(1) + operator
                 )
             }
-        }
-        else{
+        } else {
             _state.update {
                 it.copy(
                     currentEquation = buildString {
@@ -61,7 +60,13 @@ class CalculatorViewModel() : ViewModel() {
                         append(" ")
                         append(operator.toEquation())
                     },
-                    numbers = _state.value.numbers + _state.value.currentNumber,
+                    numbers = if (
+                        _state.value.operators.isNotEmpty() &&
+                        _state.value.operators.last() == Operator.MOD
+                        )
+                        _state.value.numbers
+                    else
+                        _state.value.numbers + _state.value.currentNumber,
                     currentNumber = if (operator == Operator.MOD) "" else "0",
                     operators = _state.value.operators + operator
                 )
@@ -85,8 +90,8 @@ class CalculatorViewModel() : ViewModel() {
         if (_state.value.currentNumber == "0" && _state.value.operators.isEmpty()) return
         else if (
             (_state.value.currentNumber == "0" || _state.value.currentNumber == "") &&
-            _state.value.operators.isNotEmpty())
-        {
+            _state.value.operators.isNotEmpty()
+        ) {
             val lastNumber = _state.value.currentEquation
                 .split(" ")
                 .dropLast(1)
@@ -102,8 +107,7 @@ class CalculatorViewModel() : ViewModel() {
                     operators = _state.value.operators.dropLast(1)
                 )
             }
-        }
-        else {
+        } else {
             val newNum = _state.value.currentNumber.dropLast(1)
             _state.update { it.copy(currentNumber = if (newNum.isEmpty()) "0" else newNum) }
         }
@@ -128,27 +132,54 @@ class CalculatorViewModel() : ViewModel() {
     }
 
     private fun calculateResult(): String {
-        val numbers = _state.value.numbers
-        val operators = _state.value.operators
+        val numbers = _state.value.numbers.map { it.toFloat() }.toMutableList()
+        val operators = _state.value.operators.toMutableList()
 
-        if (numbers.size == 1) return numbers[0]
+        if (numbers.size == 1) return numbers[0].toString()
         if (numbers.isEmpty()) return "0"
 
-        var res = numbers[0].toFloat()
-        for (i in 0 until operators.size) {
+        var i = 0
+        while (i < operators.size)  {
             when (operators[i]) {
                 Operator.DIVIDER -> {
-                    if (numbers[i + 1].toFloat() == 0f) return UNDEFINED
-                    res /= numbers[i + 1].toFloat()
+                    if (numbers[i + 1] == 0f) return UNDEFINED
+                    val res = numbers[i] / numbers[i + 1]
+                    numbers[i] = res
+                    numbers.removeAt(i + 1)
+                    operators.removeAt(i)
                 }
-
-                Operator.MULTIPLY -> res *= numbers[i + 1].toFloat()
-                Operator.ADDITION -> res += numbers[i + 1].toFloat()
-                Operator.MOD -> res /= 100
-                Operator.MINUS -> res -= numbers[i + 1].toFloat()
+                Operator.MULTIPLY -> {
+                    val res = numbers[i] * numbers[i + 1]
+                    numbers[i] = res
+                    numbers.removeAt(i + 1)
+                    operators.removeAt(i)
+                }
+                Operator.MOD -> {
+                    val res = numbers[i] / 100
+                    numbers[i] = res
+                    operators.removeAt(i)
+                }
+                Operator.ADDITION, Operator.MINUS -> i++
             }
         }
-        return numToString(res)
+
+        while (operators.isNotEmpty()) {
+            when (operators[FIRST_ITEM]) {
+                Operator.ADDITION -> {
+                    val res = numbers[FIRST_ITEM] + numbers[FIRST_ITEM + 1]
+                    numbers[FIRST_ITEM] = res
+                    numbers.removeAt(FIRST_ITEM + 1)
+                    operators.removeAt(FIRST_ITEM)
+                }
+                Operator.MINUS -> {
+                    val res = numbers[FIRST_ITEM] - numbers[FIRST_ITEM + 1]
+                    numbers[FIRST_ITEM] = res
+                    operators.removeAt(FIRST_ITEM)
+                }
+                Operator.DIVIDER, Operator.MULTIPLY, Operator.MOD -> {}
+            }
+        }
+        return numToString(numbers[FIRST_ITEM])
     }
 
     private fun Operator.toEquation(): String {
@@ -172,5 +203,6 @@ class CalculatorViewModel() : ViewModel() {
 
     private companion object {
         const val UNDEFINED = "Undefined"
+        const val FIRST_ITEM = 0
     }
 }
