@@ -1,448 +1,454 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:scrollbars="none"
+    android:overScrollMode="never">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="340dp"
-        android:layout_weight="1"
-        android:background="@drawable/result_view"
-        android:paddingHorizontal="24dp"
-        android:paddingTop="32dp">
-
-        <TextView
-            android:id="@+id/last_equation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/doppio_one_regular"
-            android:text=""
-            android:textColor="@color/Brown40pre"
-            android:textSize="20dp"
-            app:layout_constraintBottom_toTopOf="@id/current_equation"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-            android:id="@+id/current_equation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/doppio_one_regular"
-            android:maxLines="3"
-            android:text="0"
-            android:textColor="@color/Brown"
-            android:textSize="36dp"
-            android:layout_marginBottom="32dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <View
-            android:layout_width="32dp"
-            android:layout_height="4dp"
-            android:layout_marginBottom="4dp"
-            android:background="@drawable/calculator_indicator"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:background="@color/white"
-        android:padding="8dp">
+        android:orientation="vertical"
+        android:background="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/ac_btn"
-            style="@style/Button.NumberButton"
-            app:layout_constraintEnd_toStartOf="@+id/back_btn"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_width="match_parent"
+            android:layout_height="310dp"
+            android:background="@drawable/result_view"
+            android:minHeight="340dp"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="32dp">
 
             <TextView
-                style="@style/ButtonText.NumberButtonText"
-                android:text="AC"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/back_btn"
-            style="@style/Button.NumberButton"
-            app:layout_constraintEnd_toStartOf="@+id/moduls_btn"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/ac_btn"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:layout_width="27dp"
-                android:layout_height="27dp"
-                android:src="@drawable/arrow_right_icon"
-                android:text="AC"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/moduls_btn"
-            style="@style/Button.FunctionButton"
-            android:onClick="onClickOperator"
-            app:layout_constraintEnd_toStartOf="@+id/divide_btn"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/back_btn"
-            app:layout_constraintTop_toTopOf="parent">
+                android:id="@+id/last_equation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/doppio_one_regular"
+                android:text=""
+                android:textColor="@color/Brown40pre"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@id/current_equation"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
-                style="@style/ButtonText.FunctionButtonText"
-                android:text="%"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/divide_btn"
-            style="@style/Button.FunctionButton"
-            android:onClick="onClickOperator"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/moduls_btn"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                style="@style/ButtonText.FunctionButtonText"
-                android:text="/"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/num7_btn"
-            style="@style/Button.NumberButton"
-            android:onClick="onClickNum"
-            app:layout_constraintEnd_toEndOf="@id/ac_btn"
-            app:layout_constraintEnd_toStartOf="@+id/num8_btn"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ac_btn">
-
-            <TextView
-                style="@style/ButtonText.NumberButtonText"
-                android:text="7"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/num8_btn"
-            style="@style/Button.NumberButton"
-            android:onClick="onClickNum"
-            app:layout_constraintEnd_toEndOf="@id/back_btn"
-            app:layout_constraintEnd_toStartOf="@+id/num9_btn"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/num7_btn"
-            app:layout_constraintStart_toStartOf="@id/back_btn"
-            app:layout_constraintTop_toBottomOf="@id/back_btn">
-
-            <TextView
-                style="@style/ButtonText.NumberButtonText"
-                android:text="8"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/num9_btn"
-            style="@style/Button.NumberButton"
-            android:onClick="onClickNum"
-            app:layout_constraintEnd_toEndOf="@id/moduls_btn"
-            app:layout_constraintEnd_toStartOf="@+id/multiply_btn"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/num8_btn"
-            app:layout_constraintStart_toStartOf="@id/moduls_btn"
-            app:layout_constraintTop_toBottomOf="@id/moduls_btn">
-
-            <TextView
-                style="@style/ButtonText.NumberButtonText"
-                android:text="9"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/multiply_btn"
-            style="@style/Button.FunctionButton"
-            android:onClick="onClickOperator"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/num9_btn"
-            app:layout_constraintStart_toStartOf="@id/divide_btn"
-            app:layout_constraintTop_toBottomOf="@id/divide_btn">
-
-            <TextView
-                style="@style/ButtonText.FunctionButtonText"
-                android:text="X"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/num4_btn"
-            style="@style/Button.NumberButton"
-            android:onClick="onClickNum"
-            app:layout_constraintEnd_toEndOf="@id/num7_btn"
-            app:layout_constraintEnd_toStartOf="@+id/num5_btn"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/num7_btn">
-
-            <TextView
-                style="@style/ButtonText.NumberButtonText"
-                android:text="4"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/num5_btn"
-            style="@style/Button.NumberButton"
-            android:onClick="onClickNum"
-            app:layout_constraintEnd_toEndOf="@id/num8_btn"
-            app:layout_constraintEnd_toStartOf="@+id/num6_btn"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/num4_btn"
-            app:layout_constraintStart_toStartOf="@id/num8_btn"
-            app:layout_constraintTop_toBottomOf="@id/num8_btn">
-
-            <TextView
-                style="@style/ButtonText.NumberButtonText"
-                android:text="5"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/num6_btn"
-            style="@style/Button.NumberButton"
-            android:onClick="onClickNum"
-            app:layout_constraintEnd_toEndOf="@id/num9_btn"
-            app:layout_constraintEnd_toStartOf="@+id/plus_btn"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/num5_btn"
-            app:layout_constraintStart_toStartOf="@id/num9_btn"
-            app:layout_constraintTop_toBottomOf="@id/num9_btn">
-
-            <TextView
-                style="@style/ButtonText.NumberButtonText"
-                android:text="6"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/plus_btn"
-            style="@style/Button.FunctionButton"
-            android:onClick="onClickOperator"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/num6_btn"
-            app:layout_constraintStart_toStartOf="@id/multiply_btn"
-            app:layout_constraintTop_toBottomOf="@id/multiply_btn">
-
-            <TextView
-                style="@style/ButtonText.FunctionButtonText"
-                android:text="+"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/num1_btn"
-            style="@style/Button.NumberButton"
-            android:onClick="onClickNum"
-            app:layout_constraintEnd_toEndOf="@id/num4_btn"
-            app:layout_constraintEnd_toStartOf="@+id/num2_btn"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/num4_btn">
-
-            <TextView
-                style="@style/ButtonText.NumberButtonText"
-                android:text="1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/num2_btn"
-            style="@style/Button.NumberButton"
-            android:onClick="onClickNum"
-            app:layout_constraintEnd_toEndOf="@id/num5_btn"
-            app:layout_constraintEnd_toStartOf="@+id/num3_btn"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/num1_btn"
-            app:layout_constraintStart_toStartOf="@id/num5_btn"
-            app:layout_constraintTop_toBottomOf="@id/num5_btn">
-
-            <TextView
-                style="@style/ButtonText.NumberButtonText"
-                android:text="2"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/num3_btn"
-            style="@style/Button.NumberButton"
-            android:onClick="onClickNum"
-            app:layout_constraintEnd_toEndOf="@id/num6_btn"
-            app:layout_constraintEnd_toStartOf="@+id/minus_btn"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/num2_btn"
-            app:layout_constraintStart_toStartOf="@id/num6_btn"
-            app:layout_constraintTop_toBottomOf="@id/num6_btn">
-
-            <TextView
-                style="@style/ButtonText.NumberButtonText"
-                android:text="3"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/minus_btn"
-            style="@style/Button.FunctionButton"
-            android:onClick="onClickOperator"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/num3_btn"
-            app:layout_constraintStart_toStartOf="@id/plus_btn"
-            app:layout_constraintTop_toBottomOf="@id/plus_btn">
-
-            <TextView
-                style="@style/ButtonText.FunctionButtonText"
-                android:text="-"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/change_sign_btn"
-            style="@style/Button.NumberButton"
-            app:layout_constraintEnd_toEndOf="@id/num1_btn"
-            app:layout_constraintEnd_toStartOf="@+id/num0_btn"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/num1_btn">
-
-            <ImageView
-                android:layout_width="12dp"
-                android:layout_height="28dp"
-                android:src="@drawable/plus_minus_icon"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/num0_btn"
-            style="@style/Button.NumberButton"
-            android:onClick="onClickNum"
-            app:layout_constraintEnd_toEndOf="@id/num2_btn"
-            app:layout_constraintEnd_toStartOf="@+id/dot_btn"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/change_sign_btn"
-            app:layout_constraintStart_toStartOf="@id/num2_btn"
-            app:layout_constraintTop_toBottomOf="@id/num2_btn">
-
-            <TextView
-                style="@style/ButtonText.NumberButtonText"
+                android:id="@+id/current_equation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:fontFamily="@font/doppio_one_regular"
+                android:maxLines="3"
                 android:text="0"
+                android:textColor="@color/Brown"
+                android:textSize="36dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <View
+                android:layout_width="32dp"
+                android:layout_height="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/calculator_indicator"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/dot_btn"
-            style="@style/Button.NumberButton"
-            android:onClick="onClickNum"
-            app:layout_constraintEnd_toEndOf="@id/num3_btn"
-            app:layout_constraintEnd_toStartOf="@+id/equle_btn"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/num0_btn"
-            app:layout_constraintStart_toStartOf="@id/num3_btn"
-            app:layout_constraintTop_toBottomOf="@id/num3_btn">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@color/white"
+            android:padding="8dp">
 
-            <TextView
-                style="@style/ButtonText.NumberButtonText"
-                android:text="."
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ac_btn"
+                style="@style/Button.NumberButton"
+                app:layout_constraintEnd_toStartOf="@+id/back_btn"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/equle_btn"
-            style="@style/Button.FunctionButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/dot_btn"
-            app:layout_constraintStart_toStartOf="@id/minus_btn"
-            app:layout_constraintTop_toBottomOf="@id/minus_btn">
+                <TextView
+                    style="@style/ButtonText.NumberButtonText"
+                    android:text="AC"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                style="@style/ButtonText.FunctionButtonText"
-                android:text="="
-                app:layout_constraintBottom_toBottomOf="parent"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/back_btn"
+                style="@style/Button.NumberButton"
+                app:layout_constraintEnd_toStartOf="@+id/moduls_btn"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/ac_btn"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="27dp"
+                    android:layout_height="27dp"
+                    android:src="@drawable/arrow_right_icon"
+                    android:text="AC"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/moduls_btn"
+                style="@style/Button.FunctionButton"
+                android:onClick="onClickOperator"
+                app:layout_constraintEnd_toStartOf="@+id/divide_btn"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/back_btn"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    style="@style/ButtonText.FunctionButtonText"
+                    android:text="%"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/divide_btn"
+                style="@style/Button.FunctionButton"
+                android:onClick="onClickOperator"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/moduls_btn"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    style="@style/ButtonText.FunctionButtonText"
+                    android:text="/"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/num7_btn"
+                style="@style/Button.NumberButton"
+                android:onClick="onClickNum"
+                app:layout_constraintEnd_toEndOf="@id/ac_btn"
+                app:layout_constraintEnd_toStartOf="@+id/num8_btn"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/ac_btn">
+
+                <TextView
+                    style="@style/ButtonText.NumberButtonText"
+                    android:text="7"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/num8_btn"
+                style="@style/Button.NumberButton"
+                android:onClick="onClickNum"
+                app:layout_constraintEnd_toEndOf="@id/back_btn"
+                app:layout_constraintEnd_toStartOf="@+id/num9_btn"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/num7_btn"
+                app:layout_constraintStart_toStartOf="@id/back_btn"
+                app:layout_constraintTop_toBottomOf="@id/back_btn">
+
+                <TextView
+                    style="@style/ButtonText.NumberButtonText"
+                    android:text="8"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/num9_btn"
+                style="@style/Button.NumberButton"
+                android:onClick="onClickNum"
+                app:layout_constraintEnd_toEndOf="@id/moduls_btn"
+                app:layout_constraintEnd_toStartOf="@+id/multiply_btn"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/num8_btn"
+                app:layout_constraintStart_toStartOf="@id/moduls_btn"
+                app:layout_constraintTop_toBottomOf="@id/moduls_btn">
+
+                <TextView
+                    style="@style/ButtonText.NumberButtonText"
+                    android:text="9"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/multiply_btn"
+                style="@style/Button.FunctionButton"
+                android:onClick="onClickOperator"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/num9_btn"
+                app:layout_constraintStart_toStartOf="@id/divide_btn"
+                app:layout_constraintTop_toBottomOf="@id/divide_btn">
+
+                <TextView
+                    style="@style/ButtonText.FunctionButtonText"
+                    android:text="X"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/num4_btn"
+                style="@style/Button.NumberButton"
+                android:onClick="onClickNum"
+                app:layout_constraintEnd_toEndOf="@id/num7_btn"
+                app:layout_constraintEnd_toStartOf="@+id/num5_btn"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/num7_btn">
+
+                <TextView
+                    style="@style/ButtonText.NumberButtonText"
+                    android:text="4"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/num5_btn"
+                style="@style/Button.NumberButton"
+                android:onClick="onClickNum"
+                app:layout_constraintEnd_toEndOf="@id/num8_btn"
+                app:layout_constraintEnd_toStartOf="@+id/num6_btn"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/num4_btn"
+                app:layout_constraintStart_toStartOf="@id/num8_btn"
+                app:layout_constraintTop_toBottomOf="@id/num8_btn">
+
+                <TextView
+                    style="@style/ButtonText.NumberButtonText"
+                    android:text="5"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/num6_btn"
+                style="@style/Button.NumberButton"
+                android:onClick="onClickNum"
+                app:layout_constraintEnd_toEndOf="@id/num9_btn"
+                app:layout_constraintEnd_toStartOf="@+id/plus_btn"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/num5_btn"
+                app:layout_constraintStart_toStartOf="@id/num9_btn"
+                app:layout_constraintTop_toBottomOf="@id/num9_btn">
+
+                <TextView
+                    style="@style/ButtonText.NumberButtonText"
+                    android:text="6"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/plus_btn"
+                style="@style/Button.FunctionButton"
+                android:onClick="onClickOperator"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/num6_btn"
+                app:layout_constraintStart_toStartOf="@id/multiply_btn"
+                app:layout_constraintTop_toBottomOf="@id/multiply_btn">
+
+                <TextView
+                    style="@style/ButtonText.FunctionButtonText"
+                    android:text="+"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/num1_btn"
+                style="@style/Button.NumberButton"
+                android:onClick="onClickNum"
+                app:layout_constraintEnd_toEndOf="@id/num4_btn"
+                app:layout_constraintEnd_toStartOf="@+id/num2_btn"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/num4_btn">
+
+                <TextView
+                    style="@style/ButtonText.NumberButtonText"
+                    android:text="1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/num2_btn"
+                style="@style/Button.NumberButton"
+                android:onClick="onClickNum"
+                app:layout_constraintEnd_toEndOf="@id/num5_btn"
+                app:layout_constraintEnd_toStartOf="@+id/num3_btn"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/num1_btn"
+                app:layout_constraintStart_toStartOf="@id/num5_btn"
+                app:layout_constraintTop_toBottomOf="@id/num5_btn">
+
+                <TextView
+                    style="@style/ButtonText.NumberButtonText"
+                    android:text="2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/num3_btn"
+                style="@style/Button.NumberButton"
+                android:onClick="onClickNum"
+                app:layout_constraintEnd_toEndOf="@id/num6_btn"
+                app:layout_constraintEnd_toStartOf="@+id/minus_btn"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/num2_btn"
+                app:layout_constraintStart_toStartOf="@id/num6_btn"
+                app:layout_constraintTop_toBottomOf="@id/num6_btn">
+
+                <TextView
+                    style="@style/ButtonText.NumberButtonText"
+                    android:text="3"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/minus_btn"
+                style="@style/Button.FunctionButton"
+                android:onClick="onClickOperator"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/num3_btn"
+                app:layout_constraintStart_toStartOf="@id/plus_btn"
+                app:layout_constraintTop_toBottomOf="@id/plus_btn">
+
+                <TextView
+                    style="@style/ButtonText.FunctionButtonText"
+                    android:text="-"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/change_sign_btn"
+                style="@style/Button.NumberButton"
+                app:layout_constraintEnd_toEndOf="@id/num1_btn"
+                app:layout_constraintEnd_toStartOf="@+id/num0_btn"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/num1_btn">
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/plus_minus_icon"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/num0_btn"
+                style="@style/Button.NumberButton"
+                android:onClick="onClickNum"
+                app:layout_constraintEnd_toEndOf="@id/num2_btn"
+                app:layout_constraintEnd_toStartOf="@+id/dot_btn"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/change_sign_btn"
+                app:layout_constraintStart_toStartOf="@id/num2_btn"
+                app:layout_constraintTop_toBottomOf="@id/num2_btn">
+
+                <TextView
+                    style="@style/ButtonText.NumberButtonText"
+                    android:text="0"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dot_btn"
+                style="@style/Button.NumberButton"
+                android:onClick="onClickNum"
+                app:layout_constraintEnd_toEndOf="@id/num3_btn"
+                app:layout_constraintEnd_toStartOf="@+id/equle_btn"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/num0_btn"
+                app:layout_constraintStart_toStartOf="@id/num3_btn"
+                app:layout_constraintTop_toBottomOf="@id/num3_btn">
+
+                <TextView
+                    style="@style/ButtonText.NumberButtonText"
+                    android:text="."
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/equle_btn"
+                style="@style/Button.FunctionButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/dot_btn"
+                app:layout_constraintStart_toStartOf="@id/minus_btn"
+                app:layout_constraintTop_toBottomOf="@id/minus_btn">
+
+                <TextView
+                    style="@style/ButtonText.FunctionButtonText"
+                    android:text="="
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
