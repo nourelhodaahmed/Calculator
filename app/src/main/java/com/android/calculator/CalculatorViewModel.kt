@@ -35,42 +35,25 @@ class CalculatorViewModel() : ViewModel() {
     }
 
     fun onOperatorClicked(operator: Operator) {
-        if (_state.value.currentNumber == "0") return
-        if (
-            _state.value.operators.isNotEmpty() &&
-            _state.value.operators.last() != Operator.MOD &&
-            _state.value.operators.size == _state.value.numbers.size + 1
-        ) {
-            _state.update {
-                it.copy(
-                    currentEquation = _state.value.currentNumber
-                        .split(" ")
-                        .dropLast(1)
-                        .joinToString(" ") + operator.toEquation(),
-                    operators = _state.value.operators.dropLast(1) + operator
+        _state.update {
+            it.copy(
+                currentEquation = buildString {
+                    append(_state.value.currentEquation)
+                    append(" ")
+                    append(_state.value.currentNumber)
+                    append(" ")
+                    append(operator.toEquation())
+                },
+                numbers = if (
+                    _state.value.operators.isNotEmpty() &&
+                    _state.value.operators.last() == Operator.MOD
                 )
-            }
-        } else {
-            _state.update {
-                it.copy(
-                    currentEquation = buildString {
-                        append(_state.value.currentEquation)
-                        append(" ")
-                        append(_state.value.currentNumber)
-                        append(" ")
-                        append(operator.toEquation())
-                    },
-                    numbers = if (
-                        _state.value.operators.isNotEmpty() &&
-                        _state.value.operators.last() == Operator.MOD
-                        )
-                        _state.value.numbers
-                    else
-                        _state.value.numbers + _state.value.currentNumber,
-                    currentNumber = if (operator == Operator.MOD) "" else "0",
-                    operators = _state.value.operators + operator
-                )
-            }
+                    _state.value.numbers
+                else
+                    _state.value.numbers + _state.value.currentNumber,
+                currentNumber = if (operator == Operator.MOD) "" else "0",
+                operators = _state.value.operators + operator
+            )
         }
     }
 
@@ -92,19 +75,19 @@ class CalculatorViewModel() : ViewModel() {
             (_state.value.currentNumber == "0" || _state.value.currentNumber == "") &&
             _state.value.operators.isNotEmpty()
         ) {
-            val lastNumber = _state.value.currentEquation
-                .split(" ")
-                .dropLast(1)
-                .last()
             _state.update {
                 it.copy(
                     currentEquation = _state.value.currentEquation
                         .split(" ")
                         .dropLast(2)
                         .joinToString(" "),
-                    currentNumber = lastNumber,
-                    numbers = _state.value.numbers.dropLast(1),
-                    operators = _state.value.operators.dropLast(1)
+                    currentNumber = if (_state.value.operators.dropLast(1).last() == Operator.MOD) ""
+                    else _state.value.numbers.last(),
+                    numbers = if (_state.value.operators.dropLast(1).last() == Operator.MOD)
+                        _state.value.numbers
+                    else
+                        _state.value.numbers.dropLast(1),
+                    operators = _state.value.operators.dropLast(1),
                 )
             }
         } else {
@@ -139,7 +122,7 @@ class CalculatorViewModel() : ViewModel() {
         if (numbers.isEmpty()) return "0"
 
         var i = 0
-        while (i < operators.size)  {
+        while (i < operators.size) {
             when (operators[i]) {
                 Operator.DIVIDER -> {
                     if (numbers[i + 1] == 0f) return UNDEFINED
@@ -148,17 +131,20 @@ class CalculatorViewModel() : ViewModel() {
                     numbers.removeAt(i + 1)
                     operators.removeAt(i)
                 }
+
                 Operator.MULTIPLY -> {
                     val res = numbers[i] * numbers[i + 1]
                     numbers[i] = res
                     numbers.removeAt(i + 1)
                     operators.removeAt(i)
                 }
+
                 Operator.MOD -> {
                     val res = numbers[i] / 100
                     numbers[i] = res
                     operators.removeAt(i)
                 }
+
                 Operator.ADDITION, Operator.MINUS -> i++
             }
         }
@@ -171,11 +157,13 @@ class CalculatorViewModel() : ViewModel() {
                     numbers.removeAt(FIRST_ITEM + 1)
                     operators.removeAt(FIRST_ITEM)
                 }
+
                 Operator.MINUS -> {
                     val res = numbers[FIRST_ITEM] - numbers[FIRST_ITEM + 1]
                     numbers[FIRST_ITEM] = res
                     operators.removeAt(FIRST_ITEM)
                 }
+
                 Operator.DIVIDER, Operator.MULTIPLY, Operator.MOD -> {}
             }
         }
@@ -185,7 +173,7 @@ class CalculatorViewModel() : ViewModel() {
     private fun Operator.toEquation(): String {
         return when (this) {
             Operator.DIVIDER -> "/"
-            Operator.MULTIPLY -> "X"
+            Operator.MULTIPLY -> "x"
             Operator.ADDITION -> "+"
             Operator.MOD -> "%"
             Operator.MINUS -> "-"
