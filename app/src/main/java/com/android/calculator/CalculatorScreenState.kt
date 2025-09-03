@@ -6,6 +6,7 @@ data class CalculatorScreenState(
     val currentNumber: String = "0",
     val numbers: List<String> = listOf(),
     val lastOperation: String = "",
+    val res: String = "",
     )
 
 enum class Operator{

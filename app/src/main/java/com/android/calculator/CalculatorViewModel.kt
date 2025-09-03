@@ -10,50 +10,46 @@ class CalculatorViewModel() : ViewModel() {
     val state = _state.asStateFlow()
 
     fun onNumberClicked(number: String) {
-        if (
-            _state.value.operators.isNotEmpty() &&
-            _state.value.operators.last() == Operator.MOD
-        ) return
-
+        if (_state.value.currentNumber.contains(".") && number == ".") return
         _state.update {
             it.copy(
-                currentNumber = if (_state.value.currentNumber == "0" && number != ".") number
-                else if (_state.value.currentNumber == UNDEFINED && number != ".") number
+                currentNumber = if (_state.value.currentNumber == UNDEFINED && number != ".") number
                 else if (_state.value.currentNumber == UNDEFINED && number == ".") "0$number"
-                else _state.value.currentNumber + number
+                else if (_state.value.currentNumber == "" && number == ".") "0$number"
+                else if (_state.value.currentEquation == "" && _state.value.currentNumber == "0" && number != ".") number
+                else _state.value.currentNumber + number,
+                res = ""
             )
         }
     }
 
     fun onChangeSignClicked() {
-        if (_state.value.currentNumber == "0") return
         _state.update {
             it.copy(
-                currentNumber = numToString((_state.value.currentNumber.toFloat() * -1))
+                currentNumber = if (_state.value.currentNumber == "") "-"
+                else if (_state.value.currentNumber == "0") "-"
+                else if (_state.value.currentNumber.first() == '-') _state.value.currentNumber.drop(1)
+                else "-" + _state.value.currentNumber
             )
         }
     }
 
     fun onOperatorClicked(operator: Operator) {
-        _state.update {
-            it.copy(
-                currentEquation = buildString {
-                    append(_state.value.currentEquation)
-                    append(" ")
-                    append(_state.value.currentNumber)
-                    append(" ")
-                    append(operator.toEquation())
-                },
-                numbers = if (
-                    _state.value.operators.isNotEmpty() &&
-                    _state.value.operators.last() == Operator.MOD
+        if (_state.value.currentNumber != "" && _state.value.currentNumber != "-") {
+            _state.update {
+                it.copy(
+                    currentEquation = buildString {
+                        append(_state.value.currentEquation)
+                        append(" ")
+                        append(_state.value.currentNumber)
+                        append(" ")
+                        append(operator.toEquation())
+                    },
+                    numbers = _state.value.numbers + _state.value.currentNumber,
+                    currentNumber = "",
+                    operators = _state.value.operators + operator
                 )
-                    _state.value.numbers
-                else
-                    _state.value.numbers + _state.value.currentNumber,
-                currentNumber = if (operator == Operator.MOD) "" else "0",
-                operators = _state.value.operators + operator
-            )
+            }
         }
     }
 
@@ -63,6 +59,7 @@ class CalculatorViewModel() : ViewModel() {
                 currentEquation = "",
                 currentNumber = "0",
                 lastOperation = "",
+                res = "",
                 operators = listOf(),
                 numbers = listOf(),
             )
@@ -70,44 +67,43 @@ class CalculatorViewModel() : ViewModel() {
     }
 
     fun deleteLast() {
-        if (_state.value.currentNumber == "0" && _state.value.operators.isEmpty()) return
-        else if (
-            (_state.value.currentNumber == "0" || _state.value.currentNumber == "") &&
-            _state.value.operators.isNotEmpty()
-        ) {
+        if (_state.value.currentNumber == UNDEFINED) _state.update { it.copy(currentNumber = "0") }
+        else if (_state.value.currentNumber == "" && _state.value.operators.isNotEmpty()) {
             _state.update {
                 it.copy(
                     currentEquation = _state.value.currentEquation
                         .split(" ")
                         .dropLast(2)
                         .joinToString(" "),
-                    currentNumber = if (_state.value.operators.dropLast(1).last() == Operator.MOD) ""
-                    else _state.value.numbers.last(),
-                    numbers = if (_state.value.operators.dropLast(1).last() == Operator.MOD)
-                        _state.value.numbers
-                    else
-                        _state.value.numbers.dropLast(1),
+                    currentNumber = _state.value.numbers.last(),
+                    numbers = _state.value.numbers.dropLast(1),
                     operators = _state.value.operators.dropLast(1),
                 )
             }
-        } else {
+        }
+        else if (_state.value.currentNumber != "") {
             val newNum = _state.value.currentNumber.dropLast(1)
-            _state.update { it.copy(currentNumber = if (newNum.isEmpty()) "0" else newNum) }
+            if (newNum == "" && _state.value.currentEquation == "")
+                _state.update { it.copy(currentNumber = "0") }
+            else
+                _state.update { it.copy(currentNumber = newNum) }
         }
     }
 
     fun onEqualButtonClicked() {
         if (_state.value.currentNumber == UNDEFINED) return
-        if (_state.value.currentNumber != "")
-            _state.update { it.copy(numbers = _state.value.numbers + _state.value.currentNumber) }
-
+        if (_state.value.currentNumber.isEmpty()) return
+        if (_state.value.currentNumber == "-") return
+        if (_state.value.operators.size != _state.value.numbers.size) return
+        _state.update { it.copy(numbers = _state.value.numbers + _state.value.currentNumber) }
         val res = calculateResult()
 
         _state.update {
             it.copy(
                 lastOperation = _state.value.currentEquation + " " + _state.value.currentNumber,
                 currentEquation = "",
-                currentNumber = res,
+                currentNumber = "",
+                res = res,
                 numbers = listOf(),
                 operators = listOf()
             )
@@ -118,7 +114,7 @@ class CalculatorViewModel() : ViewModel() {
         val numbers = _state.value.numbers.map { it.toFloat() }.toMutableList()
         val operators = _state.value.operators.toMutableList()
 
-        if (numbers.size == 1) return numbers[0].toString()
+        if (numbers.size == 1) return numToString(numbers[0])
         if (numbers.isEmpty()) return "0"
 
         var i = 0
@@ -126,25 +122,21 @@ class CalculatorViewModel() : ViewModel() {
             when (operators[i]) {
                 Operator.DIVIDER -> {
                     if (numbers[i + 1] == 0f) return UNDEFINED
-                    val res = numbers[i] / numbers[i + 1]
-                    numbers[i] = res
+                    numbers[i] /= numbers[i + 1]
                     numbers.removeAt(i + 1)
                     operators.removeAt(i)
                 }
-
                 Operator.MULTIPLY -> {
-                    val res = numbers[i] * numbers[i + 1]
-                    numbers[i] = res
+                    numbers[i] *= numbers[i + 1]
                     numbers.removeAt(i + 1)
                     operators.removeAt(i)
                 }
-
                 Operator.MOD -> {
-                    val res = numbers[i] / 100
-                    numbers[i] = res
+                    if (numbers[i + 1] == 0f) return UNDEFINED
+                    numbers[i] %= numbers[i+1]
+                    numbers.removeAt(i + 1)
                     operators.removeAt(i)
                 }
-
                 Operator.ADDITION, Operator.MINUS -> i++
             }
         }
@@ -181,9 +173,8 @@ class CalculatorViewModel() : ViewModel() {
     }
 
     private fun numToString(num: Float): String {
-        val newNum = num.toInt()
-        return if (num == newNum.toFloat()) {
-            newNum.toString()
+        return if (num.toString().endsWith(".0")) {
+            num.toString().substring(0, num.toString().length - 2)
         } else {
             num.toString()
         }
