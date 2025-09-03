@@ -2,7 +2,7 @@
 <resources>
     <style name="Button">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">79dp</item>
+        <item name="android:layout_height">0dp</item>
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:layout_marginEnd">8dp</item>
     </style>

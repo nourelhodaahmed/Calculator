@@ -41,7 +41,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
                 android:fontFamily="@font/doppio_one_regular"
-                android:maxLines="3"
                 android:text="0"
                 android:textColor="@color/Brown"
                 android:textSize="36sp"
@@ -69,6 +68,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ac_btn"
                 style="@style/Button.NumberButton"
+                app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toStartOf="@+id/back_btn"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -86,6 +86,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/back_btn"
                 style="@style/Button.NumberButton"
+                app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toStartOf="@+id/moduls_btn"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/ac_btn"
@@ -105,6 +106,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/moduls_btn"
                 style="@style/Button.FunctionButton"
+                app:layout_constraintDimensionRatio="1:1"
                 android:onClick="onClickOperator"
                 app:layout_constraintEnd_toStartOf="@+id/divide_btn"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -123,6 +125,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/divide_btn"
                 style="@style/Button.FunctionButton"
+                app:layout_constraintDimensionRatio="1:1"
                 android:onClick="onClickOperator"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -141,6 +144,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/num7_btn"
                 style="@style/Button.NumberButton"
+                app:layout_constraintDimensionRatio="1:1"
                 android:onClick="onClickNum"
                 app:layout_constraintEnd_toEndOf="@id/ac_btn"
                 app:layout_constraintEnd_toStartOf="@+id/num8_btn"
@@ -160,6 +164,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/num8_btn"
                 style="@style/Button.NumberButton"
+                app:layout_constraintDimensionRatio="1:1"
                 android:onClick="onClickNum"
                 app:layout_constraintEnd_toEndOf="@id/back_btn"
                 app:layout_constraintEnd_toStartOf="@+id/num9_btn"
@@ -180,6 +185,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/num9_btn"
                 style="@style/Button.NumberButton"
+                app:layout_constraintDimensionRatio="1:1"
                 android:onClick="onClickNum"
                 app:layout_constraintEnd_toEndOf="@id/moduls_btn"
                 app:layout_constraintEnd_toStartOf="@+id/multiply_btn"
@@ -200,6 +206,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/multiply_btn"
                 style="@style/Button.FunctionButton"
+                app:layout_constraintDimensionRatio="1:1"
                 android:onClick="onClickOperator"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -219,6 +226,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/num4_btn"
                 style="@style/Button.NumberButton"
+                app:layout_constraintDimensionRatio="1:1"
                 android:onClick="onClickNum"
                 app:layout_constraintEnd_toEndOf="@id/num7_btn"
                 app:layout_constraintEnd_toStartOf="@+id/num5_btn"
@@ -238,6 +246,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/num5_btn"
                 style="@style/Button.NumberButton"
+                app:layout_constraintDimensionRatio="1:1"
                 android:onClick="onClickNum"
                 app:layout_constraintEnd_toEndOf="@id/num8_btn"
                 app:layout_constraintEnd_toStartOf="@+id/num6_btn"
@@ -258,6 +267,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/num6_btn"
                 style="@style/Button.NumberButton"
+                app:layout_constraintDimensionRatio="1:1"
                 android:onClick="onClickNum"
                 app:layout_constraintEnd_toEndOf="@id/num9_btn"
                 app:layout_constraintEnd_toStartOf="@+id/plus_btn"
@@ -278,6 +288,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/plus_btn"
                 style="@style/Button.FunctionButton"
+                app:layout_constraintDimensionRatio="1:1"
                 android:onClick="onClickOperator"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -297,6 +308,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/num1_btn"
                 style="@style/Button.NumberButton"
+                app:layout_constraintDimensionRatio="1:1"
                 android:onClick="onClickNum"
                 app:layout_constraintEnd_toEndOf="@id/num4_btn"
                 app:layout_constraintEnd_toStartOf="@+id/num2_btn"
@@ -316,6 +328,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/num2_btn"
                 style="@style/Button.NumberButton"
+                app:layout_constraintDimensionRatio="1:1"
                 android:onClick="onClickNum"
                 app:layout_constraintEnd_toEndOf="@id/num5_btn"
                 app:layout_constraintEnd_toStartOf="@+id/num3_btn"
@@ -336,6 +349,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/num3_btn"
                 style="@style/Button.NumberButton"
+                app:layout_constraintDimensionRatio="1:1"
                 android:onClick="onClickNum"
                 app:layout_constraintEnd_toEndOf="@id/num6_btn"
                 app:layout_constraintEnd_toStartOf="@+id/minus_btn"
@@ -356,6 +370,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/minus_btn"
                 style="@style/Button.FunctionButton"
+                app:layout_constraintDimensionRatio="1:1"
                 android:onClick="onClickOperator"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -375,6 +390,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/change_sign_btn"
                 style="@style/Button.NumberButton"
+                app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="@id/num1_btn"
                 app:layout_constraintEnd_toStartOf="@+id/num0_btn"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -394,6 +410,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/num0_btn"
                 style="@style/Button.NumberButton"
+                app:layout_constraintDimensionRatio="1:1"
                 android:onClick="onClickNum"
                 app:layout_constraintEnd_toEndOf="@id/num2_btn"
                 app:layout_constraintEnd_toStartOf="@+id/dot_btn"
@@ -414,6 +431,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/dot_btn"
                 style="@style/Button.NumberButton"
+                app:layout_constraintDimensionRatio="1:1"
                 android:onClick="onClickNum"
                 app:layout_constraintEnd_toEndOf="@id/num3_btn"
                 app:layout_constraintEnd_toStartOf="@+id/equle_btn"
@@ -434,6 +452,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/equle_btn"
                 style="@style/Button.FunctionButton"
+                app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/dot_btn"
