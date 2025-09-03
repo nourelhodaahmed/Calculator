@@ -10,6 +10,8 @@ class CalculatorViewModel() : ViewModel() {
     val state = _state.asStateFlow()
 
     fun onNumberClicked(number: String) {
+        if (_state.value.numbers.isNotEmpty() && _state.value.numbers.size >= 7) return
+        if (_state.value.currentNumber.length >= 8) return
         if (_state.value.currentNumber.contains(".") && number == ".") return
         _state.update {
             it.copy(
@@ -35,6 +37,7 @@ class CalculatorViewModel() : ViewModel() {
     }
 
     fun onOperatorClicked(operator: Operator) {
+        if (_state.value.operators.isNotEmpty() && _state.value.operators.size >= 6) return
         if (_state.value.currentNumber != "" && _state.value.currentNumber != "-") {
             _state.update {
                 it.copy(
