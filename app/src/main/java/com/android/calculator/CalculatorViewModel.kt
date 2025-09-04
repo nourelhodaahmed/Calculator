@@ -1,5 +1,6 @@
 package com.android.calculator
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -11,7 +12,7 @@ class CalculatorViewModel() : ViewModel() {
 
     fun onNumberClicked(number: String) {
         if (_state.value.numbers.isNotEmpty() && _state.value.numbers.size >= 7) return
-        if (_state.value.currentNumber.length >= 8) return
+        if (_state.value.currentNumber.length >= 10) return
         if (_state.value.currentNumber.contains(".") && number == ".") return
         _state.update {
             it.copy(
@@ -38,6 +39,7 @@ class CalculatorViewModel() : ViewModel() {
 
     fun onOperatorClicked(operator: Operator) {
         if (_state.value.operators.isNotEmpty() && _state.value.operators.size >= 6) return
+        if (_state.value.currentNumber == UNDEFINED) return
         if (_state.value.currentNumber != "" && _state.value.currentNumber != "-") {
             _state.update {
                 it.copy(
@@ -105,7 +107,7 @@ class CalculatorViewModel() : ViewModel() {
             it.copy(
                 lastOperation = _state.value.currentEquation + " " + _state.value.currentNumber,
                 currentEquation = "",
-                currentNumber = "",
+                currentNumber = res,
                 res = res,
                 numbers = listOf(),
                 operators = listOf()
@@ -176,10 +178,12 @@ class CalculatorViewModel() : ViewModel() {
     }
 
     private fun numToString(num: Float): String {
-        return if (num.toString().endsWith(".0")) {
-            num.toString().substring(0, num.toString().length - 2)
+        var n = num
+        if (num.toString().contains("-0")) n *= -1
+        return if (n.toString().endsWith(".0")) {
+            n.toString().substring(0, n.toString().length - 2)
         } else {
-            num.toString()
+            n.toString()
         }
     }
 

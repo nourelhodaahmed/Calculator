@@ -44,8 +44,8 @@ class MainActivity : AppCompatActivity() {
         }
         binding.equleBtn.setOnClickListener {
             viewModel.onEqualButtonClicked()
-            if (viewModel.state.value.res != "")
-                binding.currentEquation.text = viewModel.state.value.res
+//            if (viewModel.state.value.res != "")
+//                binding.currentEquation.text = viewModel.state.value.res
         }
         binding.changeSignBtn.setOnClickListener {
             viewModel.onChangeSignClicked()
